@@ -10,7 +10,7 @@
       users:
          - username: a.vanwijnbergen@fullstaq.com
            fullname: "Arnold van Wijnbergen"
-           role: "AH Customer Technology"
+           role: "SRE"
 
 #       skypeUsername:
 #       timezone:
@@ -26,25 +26,25 @@
 
     - role: opsgenie-mgmt
       Teams:
-        - name: "AMS_ITOnline_L3_SRE_OMA"
+        - name: "Observability"
           description: "This team is automatically maintained by Teams-as-Code"
  #        members:
-        - name: "AMS_ITOnline_L3_SRE_ReleaseEngineering"
+        - name: "Release"
           description: "This team is automatically maintained by Teams-as-Code"
 
     - role: opsgenie-mgmt
       Subs:
-        - teamname: "AMS_ITOnline_L3_SRE_OMA"
+        - teamname: "Observability"
           username: "a.vanwijnbergen@fullstaq.com"
           teamrole: "admin"
 
     - role: opsgenie-mgmt
       Services:
         - svc_name: "monitoring"
-          team: "AMS_ITOnline_L3_SRE_OMA"
+          team: "Observability"
         - svc_name: "alerting"
-          team: "AMS_ITOnline_L3_SRE_OMA"
+          team: "Observability"
 #        - svc_name: "tracing"
-#          team: "AMS_ITOnline_L3_SRE_OMA"
+#          team: "Observability"
         - svc_name: "Github"
-          team: "AMS_ITOnline_L3_SRE_ReleaseEngineering"
+          team: "Release"
