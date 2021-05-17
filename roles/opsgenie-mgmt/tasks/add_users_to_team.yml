@@ -1,0 +1,48 @@
+---
+- name: Get List of all Teams
+  uri:
+    method: GET
+    url: "https://api.opsgenie.com/v2/teams"
+    headers:
+      Authorization: "GenieKey {{ api_key }}"
+    return_content: yes
+  register: team_id
+  ignore_errors: true
+- name: Create a list of all existing team names and respected ID's
+  set_fact:
+    existing_team_id: "{{ team_id.json.data | map(attribute='id') | list }}"
+    existing_team_names: "{{ team_id.json.data | map(attribute='name') | list }}"
+
+- name: Get List of all Users
+  uri:
+    method: GET
+    url: "https://api.opsgenie.com/v2/users"
+    headers:
+      Authorization: "GenieKey {{ api_key }}"
+    return_content: yes
+  register: existing_users
+  ignore_errors: true
+
+- name: Create a list of all existing team names and respected ID's
+  set_fact:
+    existing_user_names: "{{ existing_users.json.data | map(attribute='username') | list }}"
+
+- name: Subscribe user to a team
+  uri:
+    method: POST
+    url: "https://api.opsgenie.com/v2/teams/{{ item.teamname }}/members?teamIdentifierType=name"
+    headers:
+      Content-Type: application/json
+      Authorization: "GenieKey {{ api_key }}"
+    body:
+      user:
+        username: "{{ item.username }}"
+      role: "{{ item.teamrole }}"
+    body_format: json
+    return_content: true
+  with_items:
+    - "{{ Subs }}"
+  register: team_updated
+  when:
+   - item.teamname in existing_team_names
+   - item.username in existing_user_names

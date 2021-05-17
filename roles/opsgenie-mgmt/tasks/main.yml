@@ -1,0 +1,22 @@
+---
+# tasks file for opsgenie-users.role
+
+- name: Users to create
+  include_tasks:  create_user.yml
+  loop: "{{ users }}"
+  when: Users is defined
+
+- name: Teams to create
+  include_tasks:  create_teams.yml
+  loop: "{{ Teams }}"
+  when: Teams is defined
+
+- name: Subscriptions to create
+  include_tasks:  add_users_to_team.yml
+  loop: "{{ Subs }}"
+  when: Subs is defined
+
+- name: Services to create
+  include_tasks:  create_service.yml
+  loop: "{{ Services }}"
+  when: Services is defined

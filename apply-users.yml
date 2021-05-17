@@ -1,0 +1,50 @@
+---
+- name: Refresh Opsgenie IAM
+  hosts: localhost
+  gather_facts: false
+  #user: ansible
+  become: false
+
+  roles:
+    - role: opsgenie-mgmt
+      users:
+         - username: a.vanwijnbergen@fullstaq.com
+           fullname: "Arnold van Wijnbergen"
+           role: "AH Customer Technology"
+
+#       skypeUsername:
+#       timezone:
+#       locale:
+#       userAddress:
+#         country:
+#         state:
+#         city:
+#         line:
+#         zipCode:
+#       details:
+#       tags:
+
+    - role: opsgenie-mgmt
+      Teams:
+        - name: "AMS_ITOnline_L3_SRE_OMA"
+          description: "This team is automatically maintained by Teams-as-Code"
+ #        members:
+        - name: "AMS_ITOnline_L3_SRE_ReleaseEngineering"
+          description: "This team is automatically maintained by Teams-as-Code"
+
+    - role: opsgenie-mgmt
+      Subs:
+        - teamname: "AMS_ITOnline_L3_SRE_OMA"
+          username: "a.vanwijnbergen@fullstaq.com"
+          teamrole: "admin"
+
+    - role: opsgenie-mgmt
+      Services:
+        - svc_name: "monitoring"
+          team: "AMS_ITOnline_L3_SRE_OMA"
+        - svc_name: "alerting"
+          team: "AMS_ITOnline_L3_SRE_OMA"
+#        - svc_name: "tracing"
+#          team: "AMS_ITOnline_L3_SRE_OMA"
+        - svc_name: "Github"
+          team: "AMS_ITOnline_L3_SRE_ReleaseEngineering"
